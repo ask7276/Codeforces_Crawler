@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <title>{% block title %}My own visualizer{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'cf/cf_home.css' %}">
+
+</head>
+<body>
+
+<div class="toggle" align="right" >
+    <button class="but_toggle" onclick = "gfg_run()" >
+</button>
+</div>
+<div align="center">
+   <h1 style="font-size:40px;">
+    Welcome To Our cf_home
+</h1>
+</div>
+<div align="center">
+    <div class="handle" style="height:80px;width:32%;background:#C0C0C0;border:1px solid black;padding-top:15px;" >
+        <form action="" method="POST">
+            {%csrf_token%}
+            <input class="analysis" type="text" name="name" placeholder="Your name.." style="height:50px;width:80%;background:white;
+            border:1px solid black;padding-left:15px;">
+        </form>
+        {% if flag%}
+    User not found. Connection Problem?
+
+    {% endif %}
+    </div>
+
+</div>
+
+<script>
+		function gfg_run() {
+		    if(document.body.style.background == 'white'){
+		        document.body.style.background = 'black';
+			document.body.style.color = 'white';
+		    }
+		    else{
+		    document.body.style.background = 'white';
+			document.body.style.color = 'black';
+		    }
+		}
+</script>
+
+</body>
+</html>

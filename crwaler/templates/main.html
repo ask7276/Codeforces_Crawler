@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body style="background-color:#4a4a4c;color:#dfdfe5">
+
+<nav class="navbar navbar-inverse" style="min-height:75px;color:#FFFFFF;background-color:#1f1f1f">
+  <div class="container-fluid" style="padding-top:15px;">
+    <div class="navbar-header">
+      <div class="navbar-brand" style="font-size:40px;padding-left:15%;color:#FFFFFF">CRAWLER</div>
+    </div>
+    <ul class="nav navbar-nav navbar-right" style="padding-right:30px;">
+      <li class="active" style="background-color:#FFFFFF;font-size:25px;"><a href="{% url 'cf_home' %}">Codeforces</a></li>
+        <form class="navbar-form navbar-left" action="" method="POST">
+            {% csrf_token %}
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search" name="search">
+        <div class="input-group-btn">
+          <button class="btn btn-default" type="submit">
+            <i class="glyphicon glyphicon-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+        <li class="active" style="background-color:#FFFFFF;font-size:25px;"><a href="{% url 'cf_home' %}">Compare</a></li>
+
+        <form class="navbar-form navbar-left" action="" method="POST">
+            {% csrf_token %}
+      <div class="input-group">
+
+          <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search" name="comp1">
+          </div>
+          <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search" name="comp2">
+          </div>
+        <div class="input-group-btn">
+          <button class="btn btn-default" type="submit">
+            <i class="glyphicon glyphicon-search"></i>
+          </button>
+        </div>
+      </div>
+
+    </form>
+    </ul>
+  </div>
+</nav>
+
+
+<br>
+<div align="center" style="font-size:25px;">
+    <h1>
+        <b>Welcome To Our Page</b>
+    </h1>
+</div>
+<br>
+<div>
+    <ul style="list-style-position: inside;padding-left:10%;">
+        <h2><li>Contest Calender</li></h2>
+</ul>
+    <div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+                <h2>Codeforces</h2>
+            <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in cf_con_list %}
+            <tr>
+                <td>{{i.con}}</td>
+                <td>{{i.time}}</td>
+            </tr>
+        {% endfor %}
+
+  </tbody>
+</table>
+  </div>
+        <div class="col-sm-4">
+            <h2>Codechef</h2>
+            <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in chef_list %}
+            <tr>
+                <td>{{i.code}}</td>
+                <td>{{i.st}}</td>
+            </tr>
+        {% endfor %}
+
+  </tbody>
+</table>
+  </div>
+        <div class="col-sm-4">
+            <h2>Atcoder</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+        <th scope="col">Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in atcoder_list %}
+            <tr>
+                <td>{{i.con}}</td>
+                <td>{{i.time}} - (03:30:00)</td>
+            </tr>
+        {% endfor %}
+
+  </tbody>
+</table>
+  </div>
+    </div>
+
+</div>
+</div>
+
+<div class="useful-links">
+    <ul style="list-style-position: inside;padding-left:10%;width:80%">
+        <h2><li>Link to Verious CP related sites</li></h2>
+        <ul>
+            <h4><li><a href="https://codeforces.com/" target="_blank">Codeforces</a></li></h4>
+            <h4><li><a href="https://codechef.com/" target="_blank">Codechef</a></li></h4>
+            <h4><li><a href="https://atcoder.jp/" target="_blank">Atcoder</a></li></h4>
+            <h4><li><a href="https://leetcode.com/" target="_blank">Leetcode</a></li></h4>
+            <h4><li><a href="https://hackerearth.com/" target="_blank">Hacker Earth</a></li></h4>
+            <h5> <h4><li><a href="https://code-drills.com/" target="_blank">Code Drill</a></li></h4> &nbsp;&nbsp;
+                &nbsp;&nbsp; This site help to
+                suggest the examples according to your weak topics </h5>
+            <h5> <h4><li><a href="https://cp-algorithms.com/" target="_blank">CP Algorithms</a></li></h4> &nbsp;&nbsp;
+                &nbsp;&nbsp; This site will guide you through through useful algos. </h5>
+        </ul>
+</ul>
+</div>
+<br>
+<br>
+<div class="user-acc">
+    <ul style="list-style-position: inside;padding-left:10%;">
+        <h2><li>To view the account profiles, enter their usernames</li></h2>
+        <ul>
+            <h4>
+                <li>
+                Codeforces :
+                <div style="padding-left:20px;padding-top:10px;">
+                    <form id="form 1" action="" method="POST">
+            {%csrf_token%}
+            <input class="analysis" type="text" name="name1" placeholder="Enter the handle..." style="height:35px;width:30%;background:#f0f0f0;
+            border:1px solid black;padding-left:30px;color:#000000;" submit="cf">
+        </form>
+                </div>
+            </li>
+            </h4>
+            <h4>
+                <li>
+                Codechef :
+                <div style="padding-left:20px;padding-top:10px;">
+                    <form id="form 2" action="" method="POST">
+            {%csrf_token%}
+            <input class="analysis" type="text" name="name2" placeholder="Enter the handle..." style="height:35px;width:30%;background:#f0f0f0;
+            border:1px solid black;padding-left:30px;color:#000000;" submit="cc">
+        </form>
+                </div>
+            </li>
+            </h4>
+            <h4>
+                <li>
+                Atcoder :
+                <div style="padding-left:20px;padding-top:10px;">
+                    <form id="form 3" action="" method="POST">
+            {%csrf_token%}
+            <input class="analysis" type="text" name="name3" placeholder="Enter the handle..." style="height:35px;width:30%;background:#f0f0f0;
+            border:1px solid black;padding-left:30px;color:#000000;" submit="at">
+        </form>
+                </div>
+            </li>
+            </h4>
+
+        </ul>
+</ul>
+</div>
+<br>
+<br>
+<div class="rating-list">
+    <ul style="list-style-position: inside;padding-left:10%;">
+        <h2><li>Link to Verious CP related sites</li></h2>
+        <ul>
+            <h4><li><a href="https://codeforces.com/ratings/organization/297" target="_blank">List of IITG Codeforces users</a></li></h4>
+            <h4><li><a href="https://www.codechef.com/ratings/all?filterBy=Institution%3DIndian%20Institute%20of%20Technology%20Guwahati&order=desc&sortBy=rating"
+                       target="_blank">List of IITG Codechef users</a></li></h4>
+
+        </ul>
+</ul>
+</div>
+<br>
+<hr style="width:80%;text-align:center;">
+<div class="description" align="cneter">
+    <h4 align="center">  © Anket Kotkar </h4>
+    <h4 align="center" > IIT Guwahati, Guwahati, India 2020</h4>
+</div>
+<br>
+<br>
+</body>

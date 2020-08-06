@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <title>{% block title %}My own visualizer{% endblock %}</title>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <link rel="stylesheet" href="{% static 'cf/styles.css' %}">
+
+</head>
+
+<body style="background:black;color:white;">
+
+<div class="toggle" align="right" >
+    <button class="but_toggle" onclick = "gfg_run()" >
+</button>
+</div>
+
+<div class="container">
+    <h1 align="center" style="font-size: 50px;">
+    Welcome To {{name}} Analysis
+</h1>
+</div>
+<br>
+<div class="container" align="center" style="width:20%;">
+    <h1 style="font-size: 35px;color:red;" align="center">
+        Contest Analysis
+    </h1>
+    <table class="table">
+    <thead>
+    <tr>
+        <th scope="col">info</th>
+        <th scope="col">value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>rating</td>
+        <td>{{current_rating}}</td>
+    </tr>
+    <tr>
+        <td>max rating</td>
+        <td>{{max_rating}}</td>
+    </tr>
+    <tr>
+        <td>lowest rating</td>
+        <td>{{lowest_rating}}</td>
+    </tr>
+    <tr>
+        <td>no. of contests given</td>
+        <td>{{contest_count}}</td>
+    </tr>
+    <tr>
+        <td>best rank</td>
+        <td>{{best_rank}}</td>
+    </tr>
+    <tr>
+        <td>worst rank</td>
+        <td>{{worst_rank}}</td>
+    </tr>
+    <tr>
+        <td>max up</td>
+        <td>{{max_up}}</td>
+    </tr>
+    <tr>
+        <td>max down</td>
+        <td>{{max_down}}</td>
+    </tr>
+    </tbody>
+</table>
+</div>
+
+<br>
+<br>
+
+<br>
+<div class="container" align="center" style="width:65%">
+    <h1 align="center">
+    Number of contests given by user are {{contest_count}}
+    </h1>
+    <table class="table">
+    <thead>
+    <tr>
+        <th scope="col">index</th>
+        <th scope="col">Contest Name</th>
+        <th scope="col">Rank</th>
+        <th scope="col">old rating</th>
+        <th scope="col">new rating</th>
+        <th scope="col">change</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for t in c %}
+    <tr>
+        <td>{{t.count}}</td>
+        <td><a href="{{t.link}}" target="_blank">{{t.con}}</a></td>
+        <td>{{t.rank}}</td>
+        <td>{{t.old}}</td>
+        <td>{{t.new}}</td>
+        <td>{{t.change}}</td>
+    </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+<br><br><br>
+
+<div class="container" style="width:30%;">
+    <h1 style="font-size: 35px;color:red;" align="center">
+        Submissions Analysis
+    </h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">info</th>
+            <th scope="col">value</th>
+        </tr>
+        </thead>
+    <tbody>
+    <tr>
+        <td>submissions</td>
+        <td>{{attempts}}</td>
+    </tr>
+    <tr>
+        <td>number od problems attemted</td>
+        <td>{{tried}}</td>
+    </tr>
+    <tr>
+        <td>problems solved</td>
+        <td>{{solved}}</td>
+    </tr>
+    <tr>
+        <td>first attempt correct</td>
+        <td>{{first_attempt_correct}}</td>
+    </tr>
+    <tr>
+        <td>avg submissions</td>
+        <td>{{avg_sub}}</td>
+    </tr>
+    </tbody>
+</table>
+</div>
+
+<br><br><br>
+<div class="container" id="chart1" align="center" style="width:85%;">
+    <script>
+  var chart1 = Highcharts.chart('chart1', {{ chart1|safe }});
+</script>
+</div>
+<br>
+<br>
+<br>
+
+<div class="container" style="width:75%;">
+    <div class="row">
+        <div class="col-sm-6" id="chart2" style="width:562px;padding:10px;">
+            <script>
+                Highcharts.chart('chart2', {{ chart2|safe }});
+            </script>
+        </div>
+
+        <div class="col-sm-6" id="chart3" style="width:562px;padding:10px;">
+            <script>
+                Highcharts.chart('chart3', {{ chart3|safe }});
+            </script>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+
+<div class="container" id="chart4" style="width:85%;">
+    <script>
+  Highcharts.chart('chart4', {{ chart4|safe }});
+</script>
+</div>
+
+<br><br>
+
+<div  class="container">
+     <h1 align="center">{{sol_num}} recent submissions of {{name}}</h1>
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">Solution ID</th>
+            <th scope="col">Problem</th>
+            <th scope="col">Language</th>
+            <th scope="col">Verdict</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for t in sub %}
+            <tr>
+                <td><a href="{{t.link }}" target="_blank">{{t.sub_id}}</a></td>
+                <td><a href="{{t.link2}}" target="_blank">{{t.name}}</a></td>
+                <td>{{t.lang}}</td>
+                <td>{{t.verdict}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<br>
+<br>
+
+<div  class="container" style="width:40%;">
+    <h1 align="center">Unsolved Questions</h1>
+    <div class="col-sm-12">
+        {% for i in unsolved_problems %}
+        <a href="{{i.link}}" target="_blank">{{i.name}}</a>
+    {% endfor %}
+    </div>
+</div>
+
+<br>
+<hr style="width:80%;text-align:center;">
+<div class="description" align="cneter">
+    <h4 align="center">  © Anket Kotkar </h4>
+    <h4 align="center" > IIT Guwahati, Guwahati, India 2020</h4>
+</div>
+<br>
+<br>
+
+<script>
+		function gfg_run() {
+		    if(document.body.style.background == 'white'){
+		        document.body.style.background = 'black';
+			document.body.style.color = 'white';
+		    }
+		    else{
+		    document.body.style.background = 'white';
+			document.body.style.color = 'black';
+		    }
+		}
+</script>
+
+</body>
+</html>
